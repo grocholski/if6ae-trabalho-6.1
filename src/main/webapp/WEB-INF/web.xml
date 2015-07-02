@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <description>Exemplo de um formulário em JSF</description>
+    <display-name>Exemplo de Formulário JSF</display-name>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>server</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.displayConfiguration</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.icefaces.disableDefaultErrorPopups</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.icefaces.sessionExpiredRedirectURI</param-name>
+        <param-value>/</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+<servlet>
+    <servlet-name>Resource Servlet</servlet-name>
+    <servlet-class>com.icesoft.faces.webapp.CompatResourceServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Resource Servlet</servlet-name>
+    <url-pattern>/xmlhttp/*</url-pattern>
+</servlet-mapping>
+    <session-config>
+        <session-timeout>20</session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>login.xhtml</welcome-file>
+        <welcome-file>inscricao.xhtml</welcome-file>
+    </welcome-file-list>
+    <security-constraint>
+        <display-name>exemplo</display-name>
+        <web-resource-collection>
+            <web-resource-name>inscricao</web-resource-name>
+            <description>Formulário de inscrição</description>
+            <url-pattern>/inscricao.xhtml</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+    <security-role>
+        <description>Administradores</description>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <description>Alunos</description>
+        <role-name>aluno</role-name>
+    </security-role>
+    <security-role>
+        <description>professores</description>
+        <role-name>professor</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>*</role-name>
+    </security-role>
+</web-app>
