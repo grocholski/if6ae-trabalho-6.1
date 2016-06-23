@@ -3,17 +3,18 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:ice="http://www.icesoft.com/icefaces/component"
                 xmlns:comps="http://java.sun.com/jsf/composite/util"
-                template="./WEB-INF/templates/layout.xhtml">
+                template="./WEB-INF/templates/layout.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:define name="metadata"/>
     <ui:define name="styles"/>
     <ui:define name="javascript"/>
 
     <ui:define name="content">
-        <ice:form>
+        <h:form>
             <comps:login usuario="" senha="" layoutVertical="false"/><br/>
-            <ice:commandButton value="Entrar"/>
-        </ice:form>
+            <h:commandButton value="Entrar"/>
+        </h:form>
     </ui:define>
 
 </ui:composition>

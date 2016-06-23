@@ -7,6 +7,7 @@ package utfpr.persistence.controller;
 import inscricao.persistence.entity.Idioma;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
@@ -15,19 +16,16 @@ import javax.persistence.TypedQuery;
  */
 public class IdiomaJpaController extends JpaController {
 
+    @PersistenceContext
+    private EntityManager em;
+
     public IdiomaJpaController() {
     }
 
     public List<Idioma> findAll() {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            TypedQuery<Idioma> q = em.createQuery(
+        TypedQuery<Idioma> q = em.createQuery(
                 "select i from Idioma i order by i.descricao",
                 Idioma.class);
-            return q.getResultList();
-        } finally {
-            if (em != null) em.close();
-        }
+        return q.getResultList();
     }
 }

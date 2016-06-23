@@ -2,17 +2,19 @@ package inscricao.faces.mngbeans;
 
 import inscricao.persistence.entity.Candidato;
 import inscricao.persistence.entity.Idioma;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.ejb.TransactionAttribute;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import utfpr.faces.support.PageBean;
-import utfpr.persistence.controller.CandidatoJpaController;
 import utfpr.persistence.controller.IdiomaJpaController;
 import utfpr.persistence.controller.JpaController;
 
@@ -20,9 +22,9 @@ import utfpr.persistence.controller.JpaController;
  *
  * @author Wilson
  */
-@ManagedBean
+@Named
 @SessionScoped
-public class InscricaoBean extends PageBean {
+public class InscricaoBean extends PageBean implements Serializable {
     private Candidato candidato = new Candidato(new Idioma(1)); // inicialmente ingles
     private boolean linkGRUVisivel = false;
     private SimpleDateFormat formatDataVencto = new SimpleDateFormat("dd/MM/yyyy");
@@ -31,6 +33,9 @@ public class InscricaoBean extends PageBean {
     private boolean correio;
     private boolean email;
 
+    @Inject
+    private IdiomaJpaController idiomaJpaController;
+    
     public Candidato getCandidato() {
         return candidato;
     }
@@ -50,11 +55,11 @@ public class InscricaoBean extends PageBean {
         }
     }
     
+    @TransactionAttribute
     public List<Idioma> getIdiomas() {
         List<Idioma> idiomas;
         try {
-            IdiomaJpaController ctl = new IdiomaJpaController();
-            idiomas = ctl.findAll();
+            idiomas = idiomaJpaController.findAll();
         } catch (Exception e) {
             idiomas = new ArrayList<>(0);
             log("Lista de idiomas", e);
