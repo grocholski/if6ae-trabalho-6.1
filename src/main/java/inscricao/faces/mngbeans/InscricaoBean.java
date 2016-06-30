@@ -44,17 +44,6 @@ public class InscricaoBean extends PageBean implements Serializable {
         this.candidato = candidato;
     }
 
-    private boolean validaCandidato() {
-        JpaController ctl = new JpaController();
-        EntityManager em = ctl.getEntityManager();
-        try {
-            Candidato c = em.find(Candidato.class, candidato.getCpf());
-            return c == null;
-        } finally {
-            em.close();
-        }
-    }
-    
     @TransactionAttribute
     public List<Idioma> getIdiomas() {
         List<Idioma> idiomas;

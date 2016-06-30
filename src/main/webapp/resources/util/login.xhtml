@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ice="http://www.icesoft.com/icefaces/component"
-      xmlns:cc="http://java.sun.com/jsf/composite">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">
 
     <cc:interface>
         <cc:attribute name="usuario" required="true"/>
@@ -12,16 +12,14 @@
     </cc:interface>
 
     <cc:implementation xmlns="http://www.w3.org/1999/xhtml"
-                       xmlns:f="http://java.sun.com/jsf/core"
-                       xmlns:ice="http://www.icesoft.com/icefaces/component"
-                       xmlns:ace="http://www.icefaces.org/icefaces/components"
-                       xmlns:cc="http://java.sun.com/jsf/composite">
-        <ice:outputLabel for="loginUsuario" value="Usuário"/>
-        <ice:inputText id="loginUsuario" value="#{cc.attrs.usuario}"/>
+                       xmlns:f="http://xmlns.jcp.org/jsf/core"
+                       xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+        <h:outputLabel for="loginUsuario" value="Usuário"/>
+        <h:inputText id="loginUsuario" value="#{cc.attrs.usuario}"/>
         <f:verbatim escape="false" rendered="#{cc.attrs.layoutVertical}">
             <br/>
         </f:verbatim>
-        <ice:outputLabel for="loginSenha" value="Senha"/>
-        <ice:inputSecret id="loginSenha" value="#{cc.attrs.senha}"/>
+        <h:outputLabel for="loginSenha" value="Senha"/>
+        <h:inputSecret id="loginSenha" value="#{cc.attrs.senha}"/>
     </cc:implementation>
 </html>
