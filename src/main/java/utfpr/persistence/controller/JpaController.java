@@ -6,9 +6,6 @@
 package utfpr.persistence.controller;
 
 import java.io.Serializable;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *

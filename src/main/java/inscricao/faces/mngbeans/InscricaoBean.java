@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.TransactionAttribute;
@@ -13,10 +14,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import utfpr.faces.support.PageBean;
+import utfpr.persistence.controller.CandidatoJpaController;
 import utfpr.persistence.controller.IdiomaJpaController;
-import utfpr.persistence.controller.JpaController;
 
 /**
  *
@@ -25,24 +26,20 @@ import utfpr.persistence.controller.JpaController;
 @Named
 @SessionScoped
 public class InscricaoBean extends PageBean implements Serializable {
+    
     private Candidato candidato = new Candidato(new Idioma(1)); // inicialmente ingles
-    private boolean linkGRUVisivel = false;
-    private SimpleDateFormat formatDataVencto = new SimpleDateFormat("dd/MM/yyyy");
-    private SimpleDateFormat formatCompetencia = new SimpleDateFormat("MM/yyyy");
+    
+    private final boolean linkGRUVisivel = false;
+    private final SimpleDateFormat formatDataVencto = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat formatCompetencia = new SimpleDateFormat("MM/yyyy");
     private boolean informativo;
     private boolean correio;
     private boolean email;
 
     @Inject
     private IdiomaJpaController idiomaJpaController;
-    
-    public Candidato getCandidato() {
-        return candidato;
-    }
-
-    public void setCandidato(Candidato candidato) {
-        this.candidato = candidato;
-    }
+    @Inject
+    private CandidatoJpaController candidatoJpaController;
 
     @TransactionAttribute
     public List<Idioma> getIdiomas() {
@@ -54,6 +51,26 @@ public class InscricaoBean extends PageBean implements Serializable {
             log("Lista de idiomas", e);
         }
         return idiomas;
+    }
+    
+    @Transactional
+    @TransactionAttribute
+    public String inscricaoAction() {
+        try {
+            candidato.setDatahora(new Date());
+            candidatoJpaController.salvar(candidato);
+        } catch (Exception e) {
+            log("Salvar candidato", e);
+        }
+        return "";
+    }
+    
+    public Candidato getCandidato() {
+        return candidato;
+    }
+
+    public void setCandidato(Candidato candidato) {
+        this.candidato = candidato;
     }
 
     public boolean isInformativo() {
@@ -99,9 +116,5 @@ public class InscricaoBean extends PageBean implements Serializable {
     public void informativoValueChangeListener(ValueChangeEvent event) {
         correio = false;
         email = false;
-    }
-    
-    public void inscricaoAction() {
-
     }
 }

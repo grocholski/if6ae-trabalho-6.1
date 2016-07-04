@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="/WEB-INF/templates/layout.xhtml">
+
+    <ui:define name="styles">
+        <link href="#{request.contextPath}/css/inscricao.css" rel="stylesheet" type="text/css" />
+    </ui:define>
+
+    <ui:define name="metadata">
+    </ui:define>
+
+    <ui:define name="javascript">
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            
+            <h:outputLabel for="idioma" value="Idioma"/>
+            <h:selectOneMenu id="idioma" value="#{candidatosBean.idioma.codigo}" style="width:12em" styleClass="ui-selectonemenu">
+                <f:selectItem itemValue="0" itemLabel="Todos"/>
+                <f:selectItems value="#{candidatosBean.idiomas}" var="i" itemValue="#{i.codigo}" itemLabel="#{i.descricao}"/>
+            </h:selectOneMenu>
+            <h:commandButton value="Filtrar" action="#{candidatosBean.filtrar}" style="margin-top: 1em"/>
+            
+            <div class="titulo-form">LISTA DE CANDIDATOS</div>
+            <h:dataTable value="#{candidatosBean.candidatos}" var="c"
+                        border="1" rules="all" cellpadding="4">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Idioma"/>
+                    </f:facet>
+                    <h:outputText value="#{c.idioma.descricao}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="CPF"/>
+                    </f:facet>
+                    <h:outputText value="#{c.cpf}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nome"/>
+                    </f:facet>
+                    <h:outputText value="#{c.nome}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cidade"/>
+                    </f:facet>
+                    <h:outputText value="#{c.cidade}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Estado"/>
+                    </f:facet>
+                    <h:outputText value="#{c.estado}"/>
+                </h:column>
+            </h:dataTable>
+            <h:messages/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
